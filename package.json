@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "TS_NODE_PROJECT=webpack.tsconfig.json ts-node ./scripts/dev.ts",
-    "start": "TS_NODE_PROJECT=webpack.tsconfig.json ts-node ./src/index.ts",
+    "start": "node dist/server.js",
     "build": "npm run clean && npm run bundle:dev",
     "bundle:dev": "TS_NODE_PROJECT=webpack.tsconfig.json ts-node ./scripts/build.ts",
     "clean": "rimraf dist",

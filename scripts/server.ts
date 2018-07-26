@@ -42,8 +42,9 @@ export const server = (bundler: MultiCompiler, config?: Configuration) => {
   httpServer.listen(port, '0.0.0.0', (err: Error) => {
     if (err) { throw err; }
 
-    const addr = httpServer.address() as AddressInfo;
+    // tslint:disable-next-line:no-shadowed-variable
+    const { address, port } = httpServer.address() as AddressInfo;
 
-    ok('✔ Server is up and running @', chalk.underline(`http://${addr.address}:${addr.port}`));
+    ok('✔ Server is up and running @', chalk.underline(`http://${address}:${port}`));
   });
 };

@@ -2,27 +2,32 @@
 
 Yes, another SSR React boilerplate.
 
+### Why?
+
+This boilerplate was created to provide a **minimal necessary** structure to get quickly into a **SSR application** with _React_, _TypeScript_ and _Express_.
+
+Other features such CSS module system, test tools or any extra feature. This allows to adapt this boilerplate for most common cases of web application projects.
+
 ### Goals
 
-* Easy to configure
+* Easy to understand
+* Easy to increment
 * Lightweight
-* Clear
 * Strong typed
-* Testable
 * Organizated
 * Reusable
 * Pretty Formatted
 * Strong linting
 
 
-### Features
+### Out of box features
 
 * ✔ SSR
 * ✔ Hot Reload
 * ✔ Routing
 
 
-### Stack
+### Core Stack
 
 * Reac
 * Express
@@ -30,8 +35,6 @@ Yes, another SSR React boilerplate.
 * TypeScript
 * Eslint + Tslint
 * Babel
-* Jest
-* Puppeteer
 
 
 ### Setup

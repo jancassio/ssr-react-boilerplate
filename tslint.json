@@ -1,0 +1,10 @@
+{
+  "defaultSeverity": "error",
+  "extends": "tslint:latest",
+  "rules": {
+    "quotemark": [true, "single", "jsx-double"],
+    "no-implicit-dependencies": [true, "dev", "src"],
+    "ordered-imports": true,
+    "interface-name": [true, "never-prefix"]
+  }
+}

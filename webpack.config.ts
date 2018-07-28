@@ -1,14 +1,14 @@
 import path from 'path';
-import { Configuration, HotModuleReplacementPlugin } from 'webpack';
+import { Configuration, DefinePlugin, HotModuleReplacementPlugin } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import nodeExternals from 'webpack-node-externals';
 
-const isDevelopment = !process.argv.includes('--release');
-const isAnalyze = process.argv.includes('--analyze');
-const isVerbose = process.argv.includes('--verbose');
+const DEBUG = process.env.DEBUG === 'true';
+const ANALYZE = process.env.ANALYZE === 'true';
+const VERBOSE = process.env.VERBOSE === 'true';
 
 const config: Configuration = {
-  mode: isDevelopment ? 'development' : 'production',
+  mode: DEBUG ? 'development' : 'production',
   name: 'config',
 
   output: {
@@ -29,22 +29,22 @@ const config: Configuration = {
     modules: ['node_modules', 'src'],
   },
 
-  bail: !isDevelopment,
-  cache: isDevelopment,
+  bail: !DEBUG,
+  cache: DEBUG,
   stats: {
-    cached: isVerbose,
-    cachedAssets: isVerbose,
-    chunkModules: isVerbose,
-    chunks: isVerbose,
+    cached: VERBOSE,
+    cachedAssets: VERBOSE,
+    chunkModules: VERBOSE,
+    chunks: VERBOSE,
     colors: true,
     errorDetails: true,
     errors: true,
-    hash: isVerbose,
+    hash: VERBOSE,
     performance: true,
     publicPath: true,
     reasons: true,
     timings: false,
-    version: isVerbose,
+    version: VERBOSE,
   },
 };
 
@@ -56,7 +56,11 @@ const client: Configuration = {
 
   entry: {
     client: [
-      'webpack-hot-middleware/client',
+      ...(DEBUG ? [
+        'react-hot-loader/patch',
+        'webpack-hot-middleware/client',
+      ] : []),
+      '@babel/polyfill',
       './src/client/client.tsx',
     ],
   },
@@ -68,7 +72,12 @@ const client: Configuration = {
   },
 
   plugins: [
-    new HotModuleReplacementPlugin(),
+    ...(DEBUG ? [ new HotModuleReplacementPlugin() ] : []),
+    new DefinePlugin({
+      '__CLIENT__': true,
+      '__DEV__': DEBUG,
+      'process.env.NODE_ENV': DEBUG ? '"development"' : '"production"',
+    }),
   ],
 };
 
@@ -91,10 +100,15 @@ const server: Configuration = {
   externals: [ nodeExternals() ],
 
   plugins: [
-    ...(isAnalyze ? [ new BundleAnalyzerPlugin() ] : []),
+    new DefinePlugin({
+      '__DEV__': DEBUG,
+      '__SERVER__': true,
+      'process.env.NODE_ENV': DEBUG ? '"development"' : '"production"',
+    }),
+    ...(ANALYZE ? [ new BundleAnalyzerPlugin() ] : []),
   ],
 
-  devtool: isDevelopment ? 'cheap-module-source-map' : false,
+  devtool: DEBUG ? 'cheap-module-source-map' : false,
 };
 
 export default [ client, server ];

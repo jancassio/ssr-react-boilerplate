@@ -17,4 +17,4 @@ class Root extends React.Component {
   }
 }
 
-export default hot(module)(Root);
+export default __DEV__ ? hot(module)(Root) : Root;

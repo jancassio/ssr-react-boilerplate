@@ -26,5 +26,10 @@
       "error",
       "always"
     ]
+  },
+  "globals": {
+    "__DEV__": false,
+    "__CLIENT__": false,
+    "__SERVER__": false
   }
 }

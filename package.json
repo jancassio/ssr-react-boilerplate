@@ -4,10 +4,11 @@
   "description": "Yes, another React boilerplate.",
   "main": "index.js",
   "scripts": {
-    "dev": "TS_NODE_PROJECT=webpack.tsconfig.json ts-node ./scripts/dev.ts",
+    "dev:config": "TS_NODE_PROJECT=webpack.tsconfig.json DEBUG=true",
+    "dev": "npm run dev:config ts-node ./scripts/dev.ts",
     "start": "node dist/server.js",
-    "build": "npm run clean && npm run bundle:dev",
-    "bundle:dev": "TS_NODE_PROJECT=webpack.tsconfig.json ts-node ./scripts/build.ts",
+    "build": "npm run clean && npm run bundle",
+    "bundle": "TS_NODE_PROJECT=webpack.tsconfig.json ts-node ./scripts/build.ts",
     "clean": "rimraf dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "tslint --fix --project ."

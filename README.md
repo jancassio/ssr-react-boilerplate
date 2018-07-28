@@ -6,7 +6,7 @@ Yes, another SSR React boilerplate.
 
 This boilerplate was created to provide a **minimal necessary** structure to get quickly into a **SSR application** with _React_, _TypeScript_ and _Express_.
 
-Other features such CSS module system, test tools or any extra feature. This allows to adapt this boilerplate for most common cases of web application projects.
+Features like CSS modules or testing tools are not present in this boilerplate to allow more flexibility.
 
 ### Goals
 
@@ -27,37 +27,23 @@ Other features such CSS module system, test tools or any extra feature. This all
 * ✔ Routing
 
 
-### Core Stack
-
-* Reac
-* Express
-* Webpack
-* TypeScript
-* Eslint + Tslint
-* Babel
-
-
 ### Setup
 
 Install all dependencies with
 
 `npm install`
 
-Deploy:
-
-`npm run build`
-
-Running:
-
-`npm start`
-
-Develop:
+Build and run for development:
 
 `npm run dev`
 
-Test:
+Build for production:
 
-`npm test`
+`npm run build`
+
+Run for production:
+
+`npm start`
 
 # License
 

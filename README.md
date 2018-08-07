@@ -2,6 +2,8 @@
 
 Yes, another SSR React boilerplate.
 
+[![Known Vulnerabilities](https://snyk.io/test/github/jancassio/ssr-react-boilerplate/badge.svg?targetFile=package.json)](https://snyk.io/test/github/jancassio/ssr-react-boilerplate?targetFile=package.json)
+
 ### Why?
 
 This boilerplate was created to provide a **minimal necessary** structure to get quickly into a **SSR application** with _React_, _TypeScript_ and _Express_.

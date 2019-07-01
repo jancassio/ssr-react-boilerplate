@@ -37,12 +37,9 @@ export const server = (bundler: MultiCompiler, config?: Configuration) => {
 
   info('ℹ Starting development server...');
 
-  const port: number = parseInt(`${process.env.PORT}`, 10) || 3000;
+  const serverPort = parseInt(`${process.env.PORT}`, 10) || 3000;
   const httpServer = http.createServer(app);
-  httpServer.listen(port, '0.0.0.0', (err: Error) => {
-    if (err) { throw err; }
-
-    // tslint:disable-next-line:no-shadowed-variable
+  httpServer.listen(serverPort, '0.0.0.0', 0, () => {
     const { address, port } = httpServer.address() as AddressInfo;
 
     ok('✔ Server is up and running @', chalk.underline(`http://${address}:${port}`));

@@ -1,8 +1,9 @@
-import * as React from 'react';
-import Routes from '../routes';
+import React from "react";
 
-export default class App extends React.Component {
-  public render() {
-    return <Routes />;
-  }
+type Props = {
+  children?: React.ReactNode;
+};
+
+export default function App({ children }: Props) {
+  return <>{children}</>;
 }

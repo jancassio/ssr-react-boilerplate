@@ -1,9 +1,9 @@
-import express, { Router } from 'express';
+import express, { Router } from "express";
 
-import { react } from './middlewares/react';
+import { react } from "./middlewares/react";
 
 const router: Router = express.Router();
 
-router.get('*', react());
+router.get("*", react());
 
 module.exports = router;

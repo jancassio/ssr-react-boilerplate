@@ -1,17 +1,18 @@
-import express from "express";
-import { Server } from "http";
+import { createServer, Server, RequestListener } from "http";
+import polka from "polka";
 
-const app = express();
+import react from './middlewares/react'
+
+const app = polka();
+app.get("*", react())
 
 const start = () =>
   new Promise<Server>((resolve, reject) => {
     try {
       const port: number = parseInt(`${process.env.PORT}`, 10) || 3000;
-      const server = app.listen(port, "0.0.0.0", (err: Error) => {
-        if (err) {
-          reject(err);
-          return;
-        }
+      const handler = app.handler as RequestListener;
+      const server = createServer(handler);
+      server.listen(port, "0.0.0.0", 0, () => {
         resolve(server);
       });
     } catch (e) {

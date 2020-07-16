@@ -1,47 +1,51 @@
-/* eslint-disable no-console */
+import chalk from "chalk";
+import polka from "polka";
+import sirv from "sirv";
+import http, { RequestListener } from "http";
+import { AddressInfo } from "net";
+import { Configuration, MultiCompiler } from "webpack";
+import webpackDevMiddleware from "webpack-dev-middleware";
+import webpackHotMiddleware from "webpack-hot-middleware";
 
-import chalk from 'chalk';
-import express from 'express';
-import http from 'http';
-import { AddressInfo } from 'net';
-import path from 'path';
-import { Configuration, MultiCompiler } from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-
-import { info, ok } from './lib/logger';
+import { info, ok } from "./lib/logger";
 
 const publicPath = (configuration?: Configuration): string => {
   if (
-    configuration
-    && configuration.output
-    && configuration.output.publicPath
+    configuration &&
+    configuration.output &&
+    configuration.output.publicPath
   ) {
     return configuration.output.publicPath;
   }
 
-  return '/';
+  return "/";
 };
 
 export const server = (bundler: MultiCompiler, config?: Configuration) => {
-  const app = express();
+  const app = polka();
+  const serve = sirv("dist/public", { dev: true });
 
-  app.use(webpackDevMiddleware(bundler, {
-    logLevel: 'warn',
-    publicPath: publicPath(config),
-  }));
+  app.use(
+    webpackDevMiddleware(bundler, {
+      logLevel: "warn",
+      publicPath: publicPath(config),
+    })
+  );
 
   app.use(webpackHotMiddleware(bundler.compilers[0]));
-  app.use(express.static(path.resolve(`dist/public`)));
-  app.use((req, res, next) => require('../src/server/router')(req, res, next));
+  app.use(serve);
 
-  info('ℹ Starting development server...');
+  info("ℹ Starting development server...");
 
   const serverPort = parseInt(`${process.env.PORT}`, 10) || 3000;
-  const httpServer = http.createServer(app);
-  httpServer.listen(serverPort, '0.0.0.0', 0, () => {
+  const handler = app.handler as RequestListener;
+  const httpServer = http.createServer(handler);
+  httpServer.listen(serverPort, "0.0.0.0", 0, () => {
     const { address, port } = httpServer.address() as AddressInfo;
 
-    ok('✔ Server is up and running @', chalk.underline(`http://${address}:${port}`));
+    ok(
+      "✔ Server is up and running @",
+      chalk.underline(`http://${address}:${port}`)
+    );
   });
 };
